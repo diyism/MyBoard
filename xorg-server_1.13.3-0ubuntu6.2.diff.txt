@@ -1,0 +1,22 @@
+--- xorg-server-1.13.3.orig/dix/events.c
++++ xorg-server-1.13.3/dix/events.c
+@@ -1579,8 +1579,8 @@
+         oldWin = keybd->focus->win;
+     if (keybd->valuator)
+         keybd->valuator->motionHintWindow = NullWindow;
+-    if (oldWin)
+-        DoFocusEvents(keybd, oldWin, grab->window, NotifyGrab);
++    //if (oldWin)
++    //    DoFocusEvents(keybd, oldWin, grab->window, NotifyGrab);
+     if (syncEvents.playingEvents)
+         grabinfo->grabTime = syncEvents.time;
+     else
+@@ -1626,7 +1626,7 @@
+     if (focusWin == FollowKeyboardWin)
+         focusWin = inputInfo.keyboard->focus->win;
+ 
+-    DoFocusEvents(keybd, grab->window, focusWin, NotifyUngrab);
++    //DoFocusEvents(keybd, grab->window, focusWin, NotifyUngrab);
+ 
+     if (!wasImplicit && grab->grabtype == XI2)
+         ReattachToOldMaster(keybd);
