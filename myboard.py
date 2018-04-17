@@ -61,6 +61,7 @@ keys=[{'key':'Control_L', 'mod':X.ControlMask},
       {'key':'t', 'mod':X.NONE},
       {'key':'y', 'mod':X.NONE},
 
+      {'key':'p', 'mod':X.NONE},
       {'key':'q', 'mod':X.NONE},
       {'key':'z', 'mod':X.NONE},
       {'key':'a', 'mod':X.NONE},
@@ -111,6 +112,7 @@ keys_mapped=[{'key':'SwitchAll', 'mod':X.NONE, 'act':0},
              {'key':X.Button4, 'mod':X.NONE, 'act':1},
              {'key':X.Button5, 'mod':X.NONE, 'act':1},
 
+             {'key':'Return', 'mod':X.NONE, 'act':2},
              {'key':'Escape', 'mod':X.NONE, 'act':2},
              {'key':'Delete', 'mod':X.ShiftMask, 'act':2},
              {'key':'Delete', 'mod':X.NONE, 'act':2},
@@ -461,8 +463,9 @@ def dockize(wind):
     disp.sync()
 
 def main():
+    global is_on
     #listen_shift()
-    #print 'hello'+str(string_to_keycode('Shift_L'))
+    print 'hello'+str(X.KeyPress)
     grab_key('Control_L', X.ControlMask)
     grab_key('Control_R', X.ControlMask)
     send_event(X.Button1, X.NONE, 1)
@@ -495,8 +498,14 @@ def main():
                   #{"detail":"j", "state":0, "type":2}
                   #{"detail":"j", "state":0, "type":3}
                   evt_key=json.loads(data);
+                  if is_on:
+                      if evt_key['detail']=='f':
+                          evt_key['detail']='s'
+                      elif evt_key['detail']=='s':
+                          evt_key['detail']='f'
                   evt_key={'detail':string_to_keycode(evt_key['detail']), 'state':evt_key['state'], 'type':evt_key['type']}
-                  handle_event(namedtuple('Struct', evt_key.keys())(*evt_key.values()))
+                  fake_input(disp, evt_key['type'], evt_key['detail'])
+                  #handle_event(namedtuple('Struct', evt_key.keys())(*evt_key.values()))
           except socket.error:
               continue
 
