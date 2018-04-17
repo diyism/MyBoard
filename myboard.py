@@ -465,7 +465,7 @@ def dockize(wind):
 def main():
     global is_on
     #listen_shift()
-    print 'hello'+str(X.KeyPress)
+    #print 'hello'+str(string_to_keycode('Shift_L'))
     grab_key('Control_L', X.ControlMask)
     grab_key('Control_R', X.ControlMask)
     send_event(X.Button1, X.NONE, 1)
