@@ -465,7 +465,7 @@ def dockize(wind):
 def main():
     global is_on
     #listen_shift()
-    #print 'hello'+str(string_to_keycode('Shift_L'))
+    print 'hello'+str(X.KeyPress)
     grab_key('Control_L', X.ControlMask)
     grab_key('Control_R', X.ControlMask)
     send_event(X.Button1, X.NONE, 1)
@@ -504,7 +504,11 @@ def main():
                       elif evt_key['detail']=='s':
                           evt_key['detail']='f'
                   evt_key={'detail':string_to_keycode(evt_key['detail']), 'state':evt_key['state'], 'type':evt_key['type']}
-                  fake_input(disp, evt_key['type'], evt_key['detail'])
+                  if evt_key['type']==5:
+                      fake_input(disp, 2, evt_key['detail'])
+                      fake_input(disp, 3, evt_key['detail'])
+                  else:
+                      fake_input(disp, evt_key['type'], evt_key['detail'])
                   #handle_event(namedtuple('Struct', evt_key.keys())(*evt_key.values()))
           except socket.error:
               continue
