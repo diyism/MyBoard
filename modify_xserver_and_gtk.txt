@@ -1,0 +1,46 @@
+http://stackoverflow.com/questions/15270420/why-xgrabkey-generates-extra-focus-out-and-focus-in-events
+
+======================================
+
+ubuntu下重新编译xorg-server:
+sudo apt-get build-dep xorg-server
+apt-get source xorg-server
+cd xorg-server-*
+#modify or patch it: comment "DoFocusEvents(keybd, oldWin, grab->window, NotifyGrab);" in ActivateKeyboardGrab() in dix/events.c, comment "DoFocusEvents(keybd, grab->window, focusWin, NotifyUngrab);" in DeactivateKeyboardGrab()
+debuild -us -uc    #"-us -uc" to avoid the signature step, maybe need: sudo apt-get install devscripts
+cd ..
+sudo dpkg --install xserver-common_*.deb
+sudo dpkg --install xserver-xorg-core_*.deb
+#clear dependencies:
+sudo apt-mark auto $(apt-cache showsrc xorg-server | grep Build-Depends | perl -p -e 's/(?:[\[(].+?[\])]|Build-Depends:|,|\|)//g')
+sudo apt-get autoremove
+
+#hold the lib:
+sudo apt-mark hold xserver-common
+sudo apt-mark hold xserver-xorg-core
+sudo apt-mark showhold
+
+
+==============================================
+
+gtkmenu.c->popup_grab_on_window->gdk_keyboard_grab->gdk_x11_device_core_grab->XGrabKeyboard()
+
+sudo apt-get build-dep gtk+2.0
+apt-get source gtk+2.0
+cd gtk+2.0-*
+#modify or patch it: add "return TRUE;" in first line of popup_grab_on_window() of gtk/gtkmenu.c
+dpkg-source --commit
+debuild --prepend-path=/usr/lib/ccache -us -uc  #"-us -uc" to avoid the signature step, maybe need: sudo apt-get install devscripts
+cd ..
+sudo dpkg --install libgtk2.0-0_*.deb
+#clear dependencies:
+sudo apt-mark auto $(apt-cache showsrc gtk+2.0 | grep Build-Depends | perl -p -e 's/(?:[\[(].+?[\])]|Build-Depends:|,|\|)//g')
+sudo apt-get autoremove
+
+#hold the lib:
+sudo apt-mark hold libgtk2.0-0
+sudo apt-mark showhold
+
+注意要编译其他软件比如要先sudo apt-get install libgtk2.0-dev的时候会报依赖的libgtk2.0-0不是最新版本, 可以:
+apt-get download libgtk2.0-dev
+sudo dpkg --force-depends -i libgtk2.0-dev_*.deb
