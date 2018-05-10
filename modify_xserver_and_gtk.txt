@@ -1,5 +1,7 @@
 http://stackoverflow.com/questions/15270420/why-xgrabkey-generates-extra-focus-out-and-focus-in-events
 
+https://gist.github.com/diyism/7442088
+
 ======================================
 
 ubuntu下重新编译xorg-server:
