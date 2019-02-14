@@ -223,7 +223,8 @@ pinyin_keys=[#1-9,0
             ]
 
 def string_to_keycode(key):
-    keys_special={' ':'space','\t':'Tab','\n':'Return','\b':'BackSpace','\e':'Escape',
+    #'\r':'Return' for Shift+Return will trigger "\r" and enter string_to_keycode() refer: https://github.com/SavinaRoja/PyKeyboard/blob/master/pykeyboard/x11.py
+    keys_special={' ':'space','\t':'Tab','\r':'Return','\n':'Return','\b':'BackSpace','\e':'Escape',
                   '!':'exclam','#':'numbersign','%':'percent','$':'dollar','&':'ampersand','"':'quotedbl',
                   '\'':'apostrophe','(':'parenleft',')':'parenright','*':'asterisk','=':'equal','+':'plus',
                   ',':'comma','-':'minus','.':'period','/':'slash',':':'colon',';':'semicolon','<':'less',
@@ -246,6 +247,7 @@ def keycode_to_string(key_code):
                'Left', 'Up', 'Right', 'Down', 'Home', 'End', 'Page_Up', 'Page_Down',
                'Insert', 'Delete', 'Print',
                'F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12'
+               '\r'
               ]
     #2nd: 0 is unshifted, 1 is shifted, 2 is alt grid, and 3 is shiftalt grid
     key_sym=disp.keycode_to_keysym(key_code, 0)
@@ -426,7 +428,7 @@ def dockize(wind):
     wind.change_property(disp.intern_atom('_NET_WM_STRUT'),
                          disp.intern_atom('CARDINAL'),
                          32,
-                         [0, 0, 0, 70]
+                         [0, 0, 0, 30]
                         )
 
     #disable minimize:
@@ -441,7 +443,7 @@ def dockize(wind):
     #wind.configure(x=0, y=1012)
     root.send_event(event=ClientMessage(window=wind,
                                   client_type=disp.intern_atom('_NET_MOVERESIZE_WINDOW'),
-                                  data=(32, ([1<<8|1<<9, 0, 1012, 0, 0]))
+                                  data=(32, ([1<<8|1<<9, 0, screen.height_in_pixels-28, 0, 0]))
                                  ),
                     event_mask=X.SubstructureRedirectMask
                    )
@@ -515,4 +517,4 @@ def main():
 
 if __name__ == '__main__':
     thread.start_new_thread(main, ())
-    webview.create_window('myboard_jack', 'https://www.google.com', 1920, 15, False, False, (1920, 10))
+    webview.create_window('myboard_jack', 'https://www.google.com', None, screen.width_in_pixels-200, 0, False, False)
