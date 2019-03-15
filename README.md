@@ -18,3 +18,7 @@ There are 3 parts:
 3. python script based on python xlib:
 
         myboard.py
+
+Shortcut features(swith on/off with Both of left Shift and right Shift keys):
+
+![](./keyboard.gif)
