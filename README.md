@@ -22,3 +22,11 @@ There are 3 parts:
 Shortcut features(swith on/off with Both of left Shift and right Shift keys):
 
 ![](./keyboard.gif)
+
+Hacked apple g6 european:
+
+![](./apple_g6_pro_euro.png)
+
+Hacked logitech k400r european:
+
+![](./logitech_k400r_euro.jpg)
