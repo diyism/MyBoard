@@ -46,3 +46,7 @@ sudo apt-mark showhold
 注意要编译其他软件比如要先sudo apt-get install libgtk2.0-dev的时候会报依赖的libgtk2.0-0不是最新版本, 可以:
 apt-get download libgtk2.0-dev
 sudo dpkg --force-depends -i libgtk2.0-dev_*.deb
+
+"debuild -us -uc"那一步容易碰到"'pkg-config --modversion glib-2.0' returned 2.58.3, but GLIB (2.56.0) was found!", 可以通过命令:
+dpkg -l | grep glib | grep 2.56
+找出来陈旧的包先进行升级
