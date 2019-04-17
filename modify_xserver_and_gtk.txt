@@ -43,6 +43,8 @@ sudo apt-get autoremove
 sudo apt-mark hold libgtk2.0-0
 sudo apt-mark showhold
 
+=========================================================
+
 注意要编译其他软件比如要先sudo apt-get install libgtk2.0-dev的时候会报依赖的libgtk2.0-0不是最新版本, 可以:
 apt-get download libgtk2.0-dev
 sudo dpkg --force-depends -i libgtk2.0-dev_*.deb
@@ -52,3 +54,6 @@ dpkg -l | grep glib | grep 2.56
 找出来陈旧的包先进行升级
 升级完似乎也没用, 最后找到旧的文件是/lib/x86_64-linux-gnu/libglib-2.0.so.0.5600.0
 删掉旧文件并sudo apt-get --reinstall install libglib2.0-0 就好了
+
+xfce-terminal本身代码里加了gdk_keyboard_grab, 没有直接用gtkmenu, 改gtk对其无效:
+https://github.com/xfce-mirror/xfce4-terminal/blob/93973960c6958c63a1a79b20ba48cae53acca95a/terminal/terminal-window-dropdown.c#L583
