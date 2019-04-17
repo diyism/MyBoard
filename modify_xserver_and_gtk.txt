@@ -55,5 +55,5 @@ dpkg -l | grep glib | grep 2.56
 升级完似乎也没用, 最后找到旧的文件是/lib/x86_64-linux-gnu/libglib-2.0.so.0.5600.0
 删掉旧文件并sudo apt-get --reinstall install libglib2.0-0 就好了
 
-xfce-terminal本身代码里加了gdk_keyboard_grab, 没有直接用gtkmenu, 改gtk对其无效:
+thunar和xfce-terminal本身代码里加了gdk_keyboard_grab, 没有直接用gtkmenu, 改gtk对其无效:
 https://github.com/xfce-mirror/xfce4-terminal/blob/93973960c6958c63a1a79b20ba48cae53acca95a/terminal/terminal-window-dropdown.c#L583
