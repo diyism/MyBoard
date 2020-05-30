@@ -31,8 +31,8 @@ Hacked logitech k400r european:
 
 ![](./logitech_k400r_euro.jpg)
 
-Single handed touch keyboard:
+Single handed blind touch keyboard:
 
-![](./single_handed_touch_keyboard.png)
+![](./single_handed_blind_touch_keyboard.png)
 
 I've used myboard.py in ubuntu for daily coding work for more than 5 years since 2013.
