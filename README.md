@@ -9,7 +9,7 @@ There are 3 parts:
 
         usr_share_X11_xkb_symbols_inet.ekc1    for asus ekc1 keyboard
         usr_share_X11_xkb_symbols_inet.g6        for apple g6 european keyboard
-        usr_share_X11_xkb_symbols_inet.k400r      for logitech k400r enropean keybaord
+        usr_share_X11_xkb_symbols_inet.k400r      for logitech k400r european keybaord
 
 2. modify xserver and gtk:
 
