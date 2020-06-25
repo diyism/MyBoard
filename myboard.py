@@ -1,3 +1,9 @@
+#ref: https://github.com/byunei/system_hotkey/blob/master/system_hotkey/system_hotkey.py
+#$ sudo apt install python-xlib
+#python-xlib is already the newest version (0.23-2).
+#$ sudo pip install pywebview
+#Requirement already satisfied: pywebview in /usr/local/lib/python2.7/dist-packages (3.2)
+
 from Xlib.display import Display
 from Xlib import X, XK
 from Xlib.protocol.event import KeyPress, KeyRelease, ButtonPress, ButtonRelease, ClientMessage
@@ -10,11 +16,8 @@ import json
 import webview
 import thread
 
-from gi.repository import GdkX11
-
-from pprint import pprint
-
-from gi.repository import xlib
+#from gi.repository import GdkX11
+#from pprint import pprint
 
 disp=Display()
 screen=disp.screen()
@@ -383,11 +386,11 @@ def switch_all():
                 ungrab_key(key['key'], key['mod'])
     if is_on:
        is_on=0
-       webview.load_html('off<script>document.body.style.backgroundColor="white";</script>')
+       window.load_html('off<script>document.body.style.backgroundColor="white";</script>')
     else:
          os.system('xset r rate 200 30')
          is_on=1
-         webview.load_html('on<script>document.body.style.backgroundColor="green";</script>')
+         window.load_html('on<script>document.body.style.backgroundColor="green";</script>')
     is_ready_switchall=0
 
 from Xlib.ext import record
@@ -421,14 +424,16 @@ def get_window(title=str):
     for window_id in window_ids:
         wind=disp.create_resource_object('window', window_id)
         #pid=wind.get_full_property(disp.intern_atom('_NET_WM_PID'), X.AnyPropertyType)
+        #print wind.get_wm_name()
         if wind.get_wm_name()==title:
             return wind
 
 def dockize(wind):
+    #occupy screen space:
     wind.change_property(disp.intern_atom('_NET_WM_STRUT'),
                          disp.intern_atom('CARDINAL'),
                          32,
-                         [0, 0, 0, 30]
+                         [0, 0, 0, 68]
                         )
 
     #disable minimize:
@@ -439,18 +444,20 @@ def dockize(wind):
                          [disp.intern_atom('_NET_WM_WINDOW_TYPE_DOCK')]
                         )
 
-    #set position:
+    #set position(now be replaced with webview.create_window() parameter x,y):
     #wind.configure(x=0, y=1012)
-    root.send_event(event=ClientMessage(window=wind,
+    '''root.send_event(event=ClientMessage(window=wind,
                                   client_type=disp.intern_atom('_NET_MOVERESIZE_WINDOW'),
-                                  data=(32, ([1<<8|1<<9, 0, screen.height_in_pixels-28, 0, 0]))
+                                  data=(32, ([1<<8|1<<9, 0, screen.height_in_pixels-48, 0, 0]))
                                  ),
                     event_mask=X.SubstructureRedirectMask
                    )
+    '''
 
-    #make always above and hide taskbar
+    #make xfce4-panel above myboard:
     #got the data format from 'xtrace wmctrl -r "jack" -b add,above,skip_taskbar'
-    root.send_event(event=ClientMessage(window=wind,
+    panel_wind=get_window('xfce4-panel')
+    root.send_event(event=ClientMessage(window=panel_wind,
                                   client_type=disp.intern_atom('_NET_WM_STATE'),
                                   data=(32, ([_NET_WM_STATE_ADD, disp.intern_atom('_NET_WM_STATE_ABOVE'), disp.intern_atom('_NET_WM_STATE_SKIP_TASKBAR'), 0, 0]))
                                  ),
@@ -459,13 +466,15 @@ def dockize(wind):
     #all_states=wind.get_full_property(disp.intern_atom('_NET_WM_STATE'), X.AnyPropertyType)
     #pprint(all_states)
 
-    #remove title bar:
-    GdkX11.X11Window.foreign_new_for_display(GdkX11.X11Display.get_default(), wind.id).set_decorations(0)
+    #remove title bar(now be replaced with webview.create_window() parameter frameless=True):
+    #maybe conflict and show: [xcb] Most likely this is a multi-threaded client and XInitThreads has not been called
+    #GdkX11.X11Window.foreign_new_for_display(GdkX11.X11Display.get_default(), wind.id).set_decorations(0)
 
     disp.sync()
 
 def main():
     global is_on
+
     #listen_shift()
     #print 'hello'+str(string_to_keycode('Shift_L'))
     grab_key('Control_L', X.ControlMask)
@@ -480,7 +489,7 @@ def main():
 
     wind=get_window('myboard_jack')
     dockize(wind)
-    webview.load_html('off<script>document.body.style.backgroundColor="white";</script>')
+    window.load_html('off<script>document.body.style.backgroundColor="white";</script>')
 
     sock=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind(('0.0.0.0', 21405))
@@ -517,4 +526,7 @@ def main():
 
 if __name__ == '__main__':
     thread.start_new_thread(main, ())
-    webview.create_window('myboard_jack', 'https://www.google.com', None, screen.width_in_pixels-200, 0, False, False)
+    #def create_window(title, url=None, html=None, js_api=None, width=800, height=600, x=None, y=None, resizable=True, fullscreen=False, min_size=(200, 100), hidden=False, frameless=False, minimized=False):
+    #default min_size is (200,100) but minimal min_size is (60, 68)
+    window=webview.create_window('myboard_jack', None, '<html><body><h1>pywebview wow!</h1><body></html>', None, screen.width_in_pixels-400, 1, 0, screen.height_in_pixels+1, False, False, (200, 100), False, True, False)
+    webview.start()
