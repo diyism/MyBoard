@@ -35,4 +35,8 @@ Single handed blind touch keyboard:
 
 ![](./single_handed_blind_touch_keyboard.png)
 
+30 keys single handed keyboard:
+
+![](.30_keys_single_handed_keyboard.png)
+
 I've used myboard.py in ubuntu for daily coding work for more than 5 years since 2013.
