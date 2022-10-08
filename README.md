@@ -3,6 +3,8 @@ MyBoard is a set of keyboard shortcut mapping,
 to control mouse movement, arrow keys, and keyboard shortcuts  with single keypress on alphabet area of keyboard, 
 similar to vi editor, but on the system base.
 
+https://diyism.github.io/MyBoard/index.htm
+
 There are 3 parts:
 
 1. modify xkb define:
