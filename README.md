@@ -18,9 +18,9 @@ There are 3 parts:
 
         modify_xserver_and_gtk.txt
 
-3. python script based on python xlib:
+3. run python script based on python xlib:
 
-        myboard.py
+        python3 myboard.py
 
 Shortcut features(swith on/off with Both of left Shift and right Shift keys):
 
