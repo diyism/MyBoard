@@ -1,7 +1,7 @@
 # MyBoard
 MyBoard is a set of keyboard shortcut mapping,  
 to control mouse movement, arrow keys, and keyboard shortcuts  with single keypress on alphabet area of keyboard, 
-similar to vi editor, but on the system base.
+similar to vi editor, but on the linux system-wide.
 
 https://diyism.github.io/MyBoard/index.htm
 
