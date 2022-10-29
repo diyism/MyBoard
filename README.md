@@ -7,7 +7,7 @@ https://diyism.github.io/MyBoard/index.htm
 
 There are 3 steps to run:
 
-1. modify xkb define:
+1. modify linux xkb define of /usr/share/X11/xkb/symbols/inet:
 
         usr_share_X11_xkb_symbols_inet.ekc1    for asus ekc1 keyboard
         usr_share_X11_xkb_symbols_inet.g6        for apple g6 european keyboard
