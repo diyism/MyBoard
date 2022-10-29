@@ -5,7 +5,7 @@ similar to vi editor, but on the system base.
 
 https://diyism.github.io/MyBoard/index.htm
 
-There are 3 parts:
+There are 3 steps to run:
 
 1. modify xkb define:
 
