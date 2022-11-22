@@ -1,0 +1,275 @@
+==============================myboard_relay.php in android apk:==========================
+<?php
+$serv=new swoole_websocket_server('127.0.0.1', 9501, SWOOLE_BASE);
+$is_right_half=1;
+
+$serv->on('Message', function($serv, $frame) use (&$is_right_half) {
+    $udp_client=new swoole_client(SWOOLE_SOCK_UDP);
+    if ($udp_client->connect('192.168.42.1', 21405))
+    {
+        $data=json_decode($frame->data, 1);
+        if ($data['type']!=9999)
+        {
+            if (!$is_right_half && $data['detail']!='Control_L' && $data['detail']!='Alt_L' && $data['detail']!='Shift_L' && $data['detail']!='Control_R')
+            {
+                $data['detail']=strtr($data['detail'], array_combine(str_split("yu6i7o\\phj8k9l';nm0,=.]/"), str_split("tr1e2w\tqgf3d4s`abv5c-x[z")));
+                $frame->data=json_encode($data);
+            }
+            $udp_client->send($frame->data."\n");
+        }
+        else
+        {
+            $is_right_half=$data['state'];
+            echo 'change state to:'.$is_right_half."\n\n";
+        }
+        echo $frame->data."\n";
+    }
+});
+$serv->start();
+?>
+
+===================================myboard.htm in android apk:========================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.28, maximum-scale=0.28, user-scalable=no">
+</head>
+<style>
+    div {position:absolute; z-index:9; width:50px; height:190px; border:solid green 1px; background-color:green; -webkit-user-select:none; -moz-user-select:none;}
+    .fn {position:absolute; z-index:11; width:180px; height:100px; font-size:50px;transform:rotate(-20deg);}
+    .lt {position:absolute; left:50px; top:0px; width:50px; height:50px;background:transparent;font-size:50px;border:0;transform:rotate(90deg);}
+    .rt {position:absolute; left:50px; top:160px; width:50px; height:50px;background:transparent;font-size:50px;border:0;transform:rotate(90deg);}
+    .lb {position:absolute; left:-40px; top:0px; width:50px; height:50px;background:transparent;font-size:50px;border:0;transform:rotate(90deg);}
+    .rb {position:absolute; left:-40px; top:160px; width:50px; height:50px;background:transparent;font-size:50px;border:0;transform:rotate(90deg);}
+</style>
+<script src="zepto.min.js"></script>
+<!--script src="zepto_touch.js"></script-->
+<body>
+<div id="hand_img" style="position:fixed;background:transparent;width:100%;height:100%;z-index:10"></div>
+
+<div class="fn" style="left:1150px;top:20px;width:210px;z-index:9;transform:rotate(0deg);">Fn(nod)</div>
+
+<div class="fn" style="left:180px;top:40px;" id="key_space">Space</div>
+<div class="fn" style="left:150px;top:200px;" id="key_ctrl">Ctrl</div>
+<div class="fn" style="left:140px;top:340px;" id="key_shift">Shift</div>
+<div class="fn" style="left:120px;top:480px;" id="key_alt">Alt</div>
+
+<div style="background:transparent;width:100px; height:300px; left:0px; top:1430px;" id="info"></div>
+
+<script>
+/*
+4finger3string:
+ty    16    27   T\
+一    一    一    一
+ru    ei    wo   qp
+
+gh    38    49   `'
+一    一    一    一
+fj    dk    sl   a;
+
+bn    50   -=    []
+一    一    一    一
+vm    c,   x.    z/
+
+space
+
+ctrl, shift, alt, fn
+*/
+
+var key_state=0;
+var fn_state=0;
+$('.fn').on('touchstart', fntouchstart);
+$('.fn').on('touchend', fntouchend);
+function fntouchstart(e)
+{
+    //$('#info').html($('#info').html()+'...'+'fnstart');
+    var key=e.target.id;
+    if (key=='key_space') {socket.send(JSON.stringify({detail:' ', state:key_state, type:2}));}
+    if (key=='key_ctrl') {/*key_state=4;*/socket.send(JSON.stringify({detail:'Control_L', state:key_state, type:2}));}
+    if (key=='key_alt') {/*key_state=8;*/socket.send(JSON.stringify({detail:'Alt_L', state:key_state, type:2}));}
+    if (key=='key_shift') {/*key_state=1;*/socket.send(JSON.stringify({detail:'Shift_L', state:key_state, type:2}));}
+    //fn(ctrl+ctrl) sent from java onSensorChanged()
+    //if (key=='key_fn') {socket.send(JSON.stringify({detail:'Control_L', state:4, type:2}));socket.send(JSON.stringify({detail:'Control_L', state:4, type:3}));}
+}
+function fntouchend(e)
+{
+    //$('#info').html($('#info').html()+'...'+'fnend');
+    var key=e.target.id;
+    if (key=='key_space') {socket.send(JSON.stringify({detail:' ', state:key_state, type:3}));}
+    if (key=='key_ctrl') {/*key_state=0;*/socket.send(JSON.stringify({detail:'Control_L', state:key_state, type:3}));}
+    if (key=='key_alt') {/*key_state=0;*/socket.send(JSON.stringify({detail:'Alt_L', state:0, type:3}));}
+    if (key=='key_shift') {/*key_state=0;*/socket.send(JSON.stringify({detail:'Shift_L', state:key_state, type:3}));}
+}
+
+var crossMul=function(v1,v2)
+{
+    return v1.x*v2.y-v1.y*v2.x;
+}
+var check_cross=function(p1,p2,p3,p4)
+{
+    var v1={x:p1.x-p3.x,y:p1.y-p3.y},
+    v2={x:p2.x-p3.x,y:p2.y-p3.y},
+    v3={x:p4.x-p3.x,y:p4.y-p3.y},
+    v=crossMul(v1,v3)*crossMul(v2,v3)
+    v1={x:p3.x-p1.x,y:p3.y-p1.y}
+    v2={x:p4.x-p1.x,y:p4.y-p1.y}
+    v3={x:p2.x-p1.x,y:p2.y-p1.y}
+    return (v<=0&&crossMul(v1,v3)*crossMul(v2,v3)<=0)?true:false
+}
+
+var socket=new WebSocket("ws://127.0.0.1:9501");
+var last_key='';
+var last_pos_y=0;
+
+var keys={'key_u':[1170,560,['t', 'y', 'r', 'u']],
+          'key_i':[1280,805,['1', '6', 'e', 'i']],
+          'key_o':[1330,1120,['2', '7', 'w', 'o']],
+          'key_p':[1250,1477,['tab', '\\', 'q', 'p']],
+
+          'key_j':[870,560,['g', 'h', 'f', 'j']],
+          'key_k':[980,805,['3', '8', 'd', 'k']],
+          'key_l':[1030,1120,['4', '9', 's', 'l']],
+          'key_semi':[950,1477,['`', "'", 'a', ';']],
+
+          'key_m':[570,560,['b','n','v', 'm']],
+          'key_comma':[680,805,['5', '0', 'c', ',']],
+          'key_period':[730,1120,['-', '=', 'x', '.']],
+          'key_slash':[650,1477,['[', ']', 'z', '/']],
+         };
+for (var i in keys)
+{
+    document.write('<div style="left:'+keys[i][0]+'px;top:'+keys[i][1]+'px" id="'+i+'"><div class="lt">'+keys[i][2][0]+'</div><div class="rt">'+keys[i][2][1]+'</div><div class="lb">'+keys[i][2][2]+'</div><div class="rb">'+keys[i][2][3]+'</div></div>');
+}
+
+var pos_start={x:0, y:0};
+var pos_end={x:0, y:0};
+var is_touch_end=1;
+var repeat_action=null;
+function mytouchstart(e)
+{
+    pos_start.x=e.changedTouches[0].clientX;
+    pos_start.y=e.changedTouches[0].clientY;
+    is_touch_end=0;                             //to limit the timeout mytouchend_action or the real mytouchend_action only run once
+    clearInterval(repeat_action);               //to avoid two repeat_action running and left the first one running forever
+    setTimeout(function(){mytouchend_action(1);}, 200);
+}
+function mytouchmove(e)
+{
+    pos_end.x=e.changedTouches[0].clientX;
+    pos_end.y=e.changedTouches[0].clientY;
+}
+function mytouchend(e)
+{
+    pos_end.x=e.changedTouches[0].clientX;
+    pos_end.y=e.changedTouches[0].clientY;
+    //$('#info').html($('#info').html()+'{'+pos_start.x+','+pos_start.y+','+pos_end.x+','+pos_end.y+'}');
+    clearInterval(repeat_action);
+    mytouchend_action();
+}
+
+function mytouchend_action(is_repeat)
+{
+    if (is_touch_end)
+    {
+        return
+    }
+    for (var i in keys)
+    {
+        if (check_cross({x:keys[i][0], y:keys[i][1]},{x:keys[i][0]+50, y:keys[i][1]+190}, pos_start, pos_end))
+        {
+            is_touch_end=1;
+            last_key=i;
+            if (pos_end.x>pos_start.x)      //landscope_up
+            {
+                send(keys[last_key][2][1], is_repeat);
+            }
+            else                            //landscope_down
+            {
+                send(keys[last_key][2][3], is_repeat);
+            }
+            break;
+        }
+    }
+}
+$('#hand_img').on('touchstart', mytouchstart);
+$('#hand_img').on('touchend', mytouchend);
+$('#hand_img').on('touchmove', mytouchmove);
+
+function send(key, is_repeat)
+{
+    socket.send(JSON.stringify({detail:key, state:key_state, type:5}));
+    if (is_repeat)
+    {
+        repeat_action=setInterval(function(){socket.send(JSON.stringify({detail:key, state:key_state, type:5}));}, 50);
+        setTimeout(function(){clearInterval(repeat_action);}, 1500);
+    }
+    $('#info').html(last_key+':'+key);
+}
+</script>
+
+</body>
+</html>
+
+==============================MainActivity.java parts in android apk:==========================
+compass_listener cl=new compass_listener();
+SensorManager sManager=(SensorManager)this.getSystemService(SENSOR_SERVICE);
+sManager.registerListener(cl, sManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_GAME);
+
+try {
+    URI uri = new URI("ws://127.0.0.1:9501/");
+    mWebSocketClient=new WebSocketClient(uri)
+    {
+        @Override
+        public void onOpen(ServerHandshake serverHandshake) {}
+
+        @Override
+        public void onMessage(String s) {}
+
+        @Override
+        public void onClose(int i, String s, boolean b) {}
+
+        @Override
+        public void onError(Exception e) {}
+    };
+    mWebSocketClient.connect();
+}catch (Exception e) {}
+
+    private class compass_listener implements SensorEventListener
+    {
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+        public void onSensorChanged(SensorEvent event)
+        {
+            if (event.sensor.getType()==Sensor.TYPE_GRAVITY)
+            {
+                //Log.d("log", "====kkk==================="+event.values[0]+':'+event.values[1]+':'+event.values[2]);
+                int current_is_right_half=event.values[1]>0?1:0;
+                if (current_is_right_half!=is_right_half)
+                {
+                    try {
+                        mWebSocketClient.send("{\"type\":9999, \"state\":" + current_is_right_half + "}");
+                    }
+                    catch (Exception e) {mWebSocketClient.reconnect();}
+                }
+                is_right_half=current_is_right_half;
+
+                int current_is_forward=event.values[0]<-3?1:0;
+                if (current_is_forward!=is_forward && current_is_forward==1)
+                {
+                    try
+                    {
+                        mWebSocketClient.send("{\"type\":2, \"state\":0, \"detail\":\"Control_L\"}");
+                        mWebSocketClient.send("{\"type\":2, \"state\":0, \"detail\":\"Control_R\"}");
+                        mWebSocketClient.send("{\"type\":3, \"state\":0, \"detail\":\"Control_R\"}");
+                        mWebSocketClient.send("{\"type\":3, \"state\":0, \"detail\":\"Control_L\"}");
+                        Log.d("log", "====kkk===================send fn 4 controls");
+                    }
+                    catch (Exception e) {mWebSocketClient.reconnect();}
+                }
+                is_forward=current_is_forward;
+            }
+        }
+    }
+
+======================myboard.py on ubuntu PC:==========================
+https://github.com/diyism/MyBoard/blob/master/myboard.py
