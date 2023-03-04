@@ -1,8 +1,14 @@
 #ref: https://github.com/byunei/system_hotkey/blob/master/system_hotkey/system_hotkey.py
-#$ sudo apt install python-xlib
+#$ sudo apt install python3-xlib
 #python-xlib is already the newest version (0.23-2).
-#$ sudo pip install pywebview
+#$ sudo apt install gir1.2-webkit2-4.0
+#gir1.2-webkit2-4.0 is already the newest version (2.28.3-2).
+#$ sudo pip install pywebview typelib python3-gi python3-gi-cairo
+#after upgrade python3.11:
+#$ sudo pip install --upgrade bottle   #or else report error: "ImportError: cannot import name 'getargspec' from 'inspect'"
+#$ sudo pip install pygobject   #replace python3-gi
 #Requirement already satisfied: pywebview in /usr/local/lib/python2.7/dist-packages (3.2)
+#python3 myboard.py
 
 from Xlib.display import Display
 from Xlib import X, XK
@@ -14,7 +20,8 @@ import socket
 from collections import namedtuple
 import json
 import webview
-import thread
+import threading
+#import thread      #python2
 
 #from gi.repository import GdkX11
 #from pprint import pprint
@@ -22,8 +29,8 @@ import thread
 disp=Display()
 screen=disp.screen()
 root=screen.root
-MOUSE_STEP=screen.width_in_pixels/20
-MOUSE_STEP_SLOW=screen.width_in_pixels/100
+MOUSE_STEP=round(screen.width_in_pixels/20)
+MOUSE_STEP_SLOW=round(screen.width_in_pixels/100)
 is_on=0
 is_ready_switchall=0
 key_delay_shift=''
@@ -259,7 +266,7 @@ def keycode_to_string(key_code):
     return XK.keysym_to_string(key_sym)
 
 def send_event(key, mod, act):
-    print 'send key,mod,act:'+str(key)+','+str(mod)+','+str(act)
+    print('send key,mod,act:'+str(key)+','+str(mod)+','+str(act))
     if key in ['MoveLeft', 'MoveRight', 'MoveUp', 'MoveDown']:
        if key=='MoveLeft':
           disp.warp_pointer(-act, 0)
@@ -287,6 +294,7 @@ def send_event(key, mod, act):
             #       window=wind
             #       window.configure(stack_mode=X.Above)
             #window.set_input_focus(X.RevertToParent, X.CurrentTime)
+            #disp.sync()
     else:
          wind=disp.get_input_focus().focus
          windows=wind.query_pointer().child
@@ -334,12 +342,12 @@ def handle_event(evt):
     global is_ready_switchall,key_delay_shift,is_on
     key_name=keycode_to_string(evt.detail)
     mod=evt.state & ~(X.LockMask | X.Mod2Mask | 256 | 1024 | 2048) #strip caps lock and num lock, and left mouse pressed
-    print 'receive keycode,keyname,type,state:'+str(evt.detail)+','+key_name+','+str(evt.type)+','+str(mod)+','+('is_on' if is_on else'is_off')
+    print('receive keycode,keyname,type,state:'+str(evt.detail)+','+key_name+','+str(evt.type)+','+str(mod)+','+('is_on' if is_on else'is_off'))
     key={'key':key_name, 'mod':mod}
     if (is_on and key in keys) or ((key_name=='Control_L' or key_name=='Control_R') and mod==4):
         key_mapped=keys_mapped[keys.index(key)]
     else:
-       print '==================key_name:'+key_name+','+str(mod)
+       print('==================key_name:'+key_name+','+str(mod))
        if evt.type==X.KeyRelease: #only can send key after previous key released
           is_ready_switchall=0
           key_delay_shift=key_name  #because Control_* key still pressed
@@ -386,11 +394,11 @@ def switch_all():
                 ungrab_key(key['key'], key['mod'])
     if is_on:
        is_on=0
-       window.load_html('off<script>document.body.style.backgroundColor="white";</script>')
+       window.load_html('<body style="background-color:white; margin:0px;">off</body>')
     else:
          os.system('xset r rate 200 30')
          is_on=1
-         window.load_html('on<script>document.body.style.backgroundColor="green";</script>')
+         window.load_html('<body style="background-color:green; margin:0px;">on</body>')
     is_ready_switchall=0
 
 from Xlib.ext import record
@@ -404,7 +412,7 @@ def process_replay(replay):
           except:
                  continue
           if evt.type==X.KeyPress:# and (key_name=='Shift_L' or key_name=='Shift_R'):
-             print 'replay:',evt.detail,evt.state
+             print('replay:',evt.detail,evt.state)
              #switch_all()
 
 def listen_shift():
@@ -429,19 +437,25 @@ def get_window(title=str):
             return wind
 
 def dockize(wind):
-    #occupy screen space:
-    wind.change_property(disp.intern_atom('_NET_WM_STRUT'),
-                         disp.intern_atom('CARDINAL'),
-                         32,
-                         [0, 0, 0, 68]
-                        )
-
     #disable minimize:
     #got the data format from 'xtrace xprop -id 0x02e00007 -f _NET_WM_WINDOW_TYPE 32a -set _NET_WM_WINDOW_TYPE _NET_WM_WINDOW_TYPE_DOCK'
+    #set window type _NET_WM_WINDOW_TYPE_DOCK first, then change _NET_WM_STRUT
     wind.change_property(disp.intern_atom('_NET_WM_WINDOW_TYPE'),
                          disp.intern_atom('ATOM'),
                          32,
                          [disp.intern_atom('_NET_WM_WINDOW_TYPE_DOCK')]
+                        )
+
+    #occupy screen space:
+    wind.change_property(disp.intern_atom('_NET_WM_STRUT'),
+                         disp.intern_atom('CARDINAL'),
+                         32,
+                         [440, 0, 0, 50]
+                        )
+    wind.change_property(disp.intern_atom('_NET_WM_STRUT_PARTIAL'),
+                         disp.intern_atom('CARDINAL'),
+                         32,
+                         [440, 0, 0, 50,  0,1080,  0,1080,  0,1920,  0,1920]
                         )
 
     #set position(now be replaced with webview.create_window() parameter x,y):
@@ -471,8 +485,9 @@ def dockize(wind):
     #GdkX11.X11Window.foreign_new_for_display(GdkX11.X11Display.get_default(), wind.id).set_decorations(0)
 
     disp.sync()
+    disp.flush()
 
-def main():
+def sub():
     global is_on
 
     #listen_shift()
@@ -489,7 +504,7 @@ def main():
 
     wind=get_window('myboard_jack')
     dockize(wind)
-    window.load_html('off<script>document.body.style.backgroundColor="white";</script>')
+    window.load_html('<body style="background-color:white;margin:0px;">off</body>')
 
     sock=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind(('0.0.0.0', 21405))
@@ -505,7 +520,7 @@ def main():
           try:
               data, address=sock.recvfrom(4096)
               if data!='':
-                  print 'receive udp:',data
+                  print('receive udp:',data)
                   #{"detail":"j", "state":0, "type":2}
                   #{"detail":"j", "state":0, "type":3}
                   evt_key=json.loads(data);
@@ -525,8 +540,10 @@ def main():
               continue
 
 if __name__ == '__main__':
-    thread.start_new_thread(main, ())
+    #thread.start_new_thread(sub, ())     #python2
+    threading.Thread(target=sub).start()
+
     #def create_window(title, url=None, html=None, js_api=None, width=800, height=600, x=None, y=None, resizable=True, fullscreen=False, min_size=(200, 100), hidden=False, frameless=False, minimized=False):
-    #default min_size is (200,100) but minimal min_size is (60, 68)
-    window=webview.create_window('myboard_jack', None, '<html><body><h1>pywebview wow!</h1><body></html>', None, screen.width_in_pixels-400, 1, 0, screen.height_in_pixels+1, False, False, (200, 100), False, True, False)
+    #default min_size is (200,100) but minimal min_size is (60, 46), the system task bar is 32
+    window=webview.create_window('myboard_jack', None, '<html><body><h1>pywebview wow!</h1><body></html>', None, screen.width_in_pixels-20, 49, 10, screen.height_in_pixels, False, False, (50, 10), False, True, False)
     webview.start()
