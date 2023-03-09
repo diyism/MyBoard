@@ -9,7 +9,7 @@ sudo apt-get build-dep xorg-server
 apt-get source xorg-server
 cd xorg-server-*
 #modify or patch it: comment "DoFocusEvents(keybd, oldWin, grab->window, NotifyGrab);" in ActivateKeyboardGrab() in dix/events.c, comment "DoFocusEvents(keybd, grab->window, focusWin, NotifyUngrab);" in DeactivateKeyboardGrab()
-debuild -us -uc    #"-us -uc" to avoid the signature step, maybe need: sudo apt-get install devscripts
+debuild -us -uc    #"-us -uc" to avoid the signature step, maybe need: sudo apt-get install devscripts dwz
 cd ..
 sudo dpkg --install xserver-common_*.deb
 sudo dpkg --install xserver-xorg-core_*.deb
