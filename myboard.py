@@ -3,10 +3,10 @@
 #python-xlib is already the newest version (0.23-2).
 #$ sudo apt install gir1.2-webkit2-4.0
 #gir1.2-webkit2-4.0 is already the newest version (2.28.3-2).
-#$ sudo pip install pywebview typelib python3-gi python3-gi-cairo
-#after upgrade python3.11:
-#$ sudo pip install --upgrade bottle   #or else report error: "ImportError: cannot import name 'getargspec' from 'inspect'"
-#$ sudo pip install pygobject   #replace python3-gi
+#$ pip install pywebview typelib python3-gi python3-gi-cairo
+#after upgrade python3.10+:
+#$ pip install --upgrade bottle   #or else report error: "ImportError: cannot import name 'getargspec' from 'inspect'"
+#$ pip install pygobject   #replace python3-gi
 #Requirement already satisfied: pywebview in /usr/local/lib/python2.7/dist-packages (3.2)
 #python3 myboard.py
 
@@ -371,6 +371,11 @@ def handle_event(evt):
          if key_mapped['key']=='SwitchAll':
             if is_ready_switchall==1:
                switch_all()
+               #the later released one of the 2 control keys may be swallowed by system, so release it again
+               send_event('Control_L', X.NONE, 0)
+               send_event('Control_L', X.NONE, 1)
+               send_event('Control_R', X.NONE, 0)
+               send_event('Control_R', X.NONE, 1)
             elif key_delay_shift:
                  send_event(key_delay_shift, X.ShiftMask, 0)
                  send_event(key_delay_shift, X.ShiftMask, 1)
