@@ -49,4 +49,4 @@ single handed keyboard by android touch and accelerometer(4fingers3strings.txt):
 ![](./single_handed_touch_and_accelerometer.png)
 ![](./single_handed_touch_and_accelerometer_real.jpg)
 
-I've used myboard.py in ubuntu for daily coding work for more than 8 years since 2013.
+I've used myboard.py in ubuntu for daily coding work for more than 10 years since 2013.
