@@ -44,4 +44,9 @@ Single handed blind touch keyboard:
 
 ![](./30_keys_single_handed_keyboard.png)
 
+single handed keyboard by android touch and accelerometer:
+
+![](./single_handed_touch_and_accelerometer.png)
+![](./single_handed_touch_and_accelerometer_real.jpg)
+
 I've used myboard.py in ubuntu for daily coding work for more than 8 years since 2013.
