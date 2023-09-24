@@ -44,7 +44,7 @@ Single handed blind touch keyboard:
 
 ![](./30_keys_single_handed_keyboard.png)
 
-single handed keyboard by android touch and accelerometer:
+single handed keyboard by android touch and accelerometer(4fingers3strings.txt):
 
 ![](./single_handed_touch_and_accelerometer.png)
 ![](./single_handed_touch_and_accelerometer_real.jpg)
