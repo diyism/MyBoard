@@ -1,0 +1,25 @@
+XKB settings（/usr/share/X11/xkb/symbols/inet） only change event.key(keysyms in sudo xkbcli interactive-evdev) and won't change event.code(keycode in sudo xkbcli interactive-evdev)，some web application will catch the original key code and re-emit original event.
+
+For example in some customize monaco editor(google IDX development environment), if I remapped right-arrow key into right-control key(
+
+    key <RGHT> {         [       Control_R ] };
+
+in /usr/share/X11/xkb/symbols/inet), the google idx will re-emit a controlRight and a arrowRight, they happen to be a keyboard shortcut(word jumping).
+
+So I shouldn't use xkb symbols file, and I shouldn't use "sudo setkeycodes e04d 97" ("sudo showkey -s" get "e04d" for right-arrow),
+it will show error for usb keyboard: "setkeycodes: failed to set scancode cd to keycode 97: ioctl KDSETKEYCODE: Invalid argument",
+I can only use /etc/udev/hwdb.d/10-myboard.hwdb:
+
+    evdev:input:b0003v046Dp4024*
+     KEYBOARD_KEY_7004f=97
+
+"700f4" is the rightArrow scancode in "sudo evtest".
+
+and then exec:
+
+    sudo systemd-hwdb update ; sudo udevadm control --reload-rules ;sudo udevadm trigger
+
+
+finally, test it with "sudo evtest", and the key code has been changed from 106 to 97. And the problem in google IDX monaco editor has been resolved.
+
+scancode(700f4, or e04d) --> keycode(RGHT, Right, KEY_RIGHT, or 106) --> keysyms(RCTL, Control_R, KEY_RIGHTCTRL, or 97)
