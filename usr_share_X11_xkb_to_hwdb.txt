@@ -25,7 +25,7 @@ finally, test it with "sudo evtest", and the key code has been changed from 106 
 
 scancode(700f4, or e04d) --> keycode(RGHT, Right, KEY_RIGHT, or 106) --> keysyms(RCTL, Control_R, KEY_RIGHTCTRL, or 97)
 
-showkeys.py:
+cat ./showkeys.sh:
 #!/bin/bash
 
 # 定义一个函数来清理进程
@@ -62,8 +62,18 @@ tail -f a.log | awk '
         sub(/,/, "", keycode_name)
         sub(/\(/, "", keycode_name)
         sub(/\)/, "", keycode_name)
+        if ($11 == "1") {
+            action = "↓"
+        } else if ($11 == "0") {
+            action = "↑"
+        }
 
-        printf "scancode: %s, keycode: %s(%s), keysyms: %s\n", scancode, keycode, keycode_name, keysyms
+        printf "scancode: %s, keycode: %s(%s), keysyms: %s, action: %s\n", scancode, keycode, keycode_name, keysyms, action
+        keysyms=""
+        scancode=""
+        keycode=""
+        keycode_name=""
+        action=""
     }
 '
 
