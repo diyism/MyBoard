@@ -35,6 +35,7 @@ keycode名称可以查: grep -i 106 /usr/include/linux/input-event-codes.h
 #define KEY_RIGHT		106
 用 keysym名称 查 X keycode(把x keycode减去8就是linux keycode): grep -i rctl /usr/share/X11/xkb/keycodes/evdev
 <RCTL> = 105;
+查看keysym名称 与 keysym短名称 对应关系:  grep -Rin 'Control_R  ]' /usr/share/X11/xkb/symbols/pc
 
 cat ./showkeys.sh:
 #!/bin/bash
