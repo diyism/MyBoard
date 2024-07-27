@@ -13,7 +13,7 @@ I can only use /etc/udev/hwdb.d/10-myboard.hwdb(or /usr/lib/udev/hwdb.d/10-myboa
     evdev:input:b0003v046Dp4024*
      KEYBOARD_KEY_7004f=97
 
-"700f4" is the rightArrow scancode in "sudo evtest /dev/input/event?".
+"7004f" is the rightArrow scancode in "sudo evtest /dev/input/event?".
 "97" or "KEY_RIGHTCTRL" is from the "sudo evtest" or "grep -i right /usr/include/linux/input-event-codes.h"
 
 and then exec:
@@ -23,7 +23,7 @@ and then exec:
 
 finally, test it with "sudo evtest", and the key code has been changed from 106 to 97. And the problem in google IDX monaco editor has been resolved.
 
-scancode(700f4, KeyboardRightArrow) --> keycode(106, KEY_RIGHT) --> keysyms(97, Control_R)
+scancode(7004f, KeyboardRightArrow) --> keycode(106, KEY_RIGHT) --> keysyms(97, Control_R)
 
 linux内核默认映射scancode --> keycode, 例如: 7004f(KeyboardRightArrow) --> 106(KEY_RIGHT)
 linux内核默认映射代码: https://github.com/torvalds/linux/blob/master/drivers/hid/hid-input.c 里面的 static const unsigned char hid_keyboard[256] = { ... } 映射表
