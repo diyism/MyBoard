@@ -13,7 +13,7 @@ I can only use /etc/udev/hwdb.d/10-myboard.hwdb:
     evdev:input:b0003v046Dp4024*
      KEYBOARD_KEY_7004f=97
 
-"700f4" is the rightArrow scancode in "sudo evtest".
+"700f4" is the rightArrow scancode in "sudo evtest /dev/input/event?".
 "97" or "KEY_RIGHTCTRL" is from the "sudo evtest" or "grep -i right /usr/include/linux/input-event-codes.h"
 
 and then exec:
