@@ -31,8 +31,8 @@ showkeys.py:
 # 定义一个函数来清理进程
 cleanup() {
     echo "正在停止 xkbcli 和 evtest..."
-    pkill -f "xkbcli interactive-evdev"
-    pkill -f "evtest /dev/input/event4"
+    sudo pkill -f "xkbcli interactive-evdev"
+    sudo pkill -f "evtest /dev/input/event4"
     exit 0
 }
 
