@@ -23,4 +23,6 @@ and then exec:
 
 finally, test it with "sudo evtest", and the key code has been changed from 106 to 97. And the problem in google IDX monaco editor has been resolved.
 
+sudo stdbuf -oL xkbcli interactive-evdev >>a.log 2>&1 & sudo evtest /dev/input/event4 >>a.log 2>&1 & tail -f a.log
+
 scancode(700f4, or e04d) --> keycode(RGHT, Right, KEY_RIGHT, or 106) --> keysyms(RCTL, Control_R, KEY_RIGHTCTRL, or 97)
