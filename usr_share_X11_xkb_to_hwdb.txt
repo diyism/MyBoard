@@ -23,13 +23,16 @@ and then exec:
 
 finally, test it with "sudo evtest", and the key code has been changed from 106 to 97. And the problem in google IDX monaco editor has been resolved.
 
-scancode(700f4, or e04d) --> keycode(RGHT, Right, KEY_RIGHT, or 106) --> keysyms(RCTL, Control_R, KEY_RIGHTCTRL, or 97)
+scancode(700f4, KeyboardRightArrow) --> keycode(106, KEY_RIGHT) --> keysyms(97, Control_R)
 
-linux default scancode --> keycode, for example: 70045 --> key_f12
-ref: https://github.com/torvalds/linux/blob/master/drivers/hid/bpf/progs/hid_report_helpers.h#L528
-#define Usage_KK_KeyboardF12                           Usage_i8(0x45)
-ref: https://github.com/torvalds/linux/blob/master/drivers/hid/hid-debug.c#L380
-{ 0x07, 0x0045, "KeyboardF12" },
+linux内核默认映射scancode --> keycode, 例如: 7004f(KeyboardRightArrow) --> 106(KEY_RIGHT)
+linux内核默认映射代码: https://github.com/torvalds/linux/blob/master/drivers/hid/hid-input.c 里面的 static const unsigned char hid_keyboard[256] = { ... } 映射表
+比如 hid_keyboard[256] 第5行第16列 编号就是4f, 则scancode就是7004f, 映射表该位置的值是十进制的106就是keycode
+ref:
+scancode名称可以查: https://github.com/torvalds/linux/blob/master/drivers/hid/hid-debug.c#L380
+{ 0x07, 0x004f, "KeyboardRightArrow" },
+keycode名称可以查: grep -i grep -i 106 /usr/include/linux/input-event-codes.h
+#define KEY_RIGHT		106
 
 cat ./showkeys.sh:
 #!/bin/bash
