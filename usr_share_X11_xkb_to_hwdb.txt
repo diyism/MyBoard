@@ -40,7 +40,7 @@ keycode名称可以查: grep -i 106 /usr/include/linux/input-event-codes.h
 cat ./showkeys.sh:
 #!/bin/bash
 
-# 定义一个函数来清理进程
+# 定义清理函数
 cleanup() {
     echo "正在停止 xkbcli 和 evtest..."
     sudo pkill -f "xkbcli interactive-evdev"
@@ -56,13 +56,23 @@ trap cleanup SIGINT
 sudo stdbuf -oL xkbcli interactive-evdev >> a.log 2>&1 &
 sudo evtest /dev/input/event4 >> a.log 2>&1 &
 
-# 实时处理并显示日志
+# 运行 awk 脚本
 tail -f a.log | awk '
+    function get_keycode(name) {
+        if (name == "") {
+            return ""
+        }
+        cmd = "grep -Rin \"\\[  " name " \" /usr/share/X11/xkb/symbols/pc | awk \"{print \\$3}\" | xargs -I {} grep -i {} /usr/share/X11/xkb/keycodes/evdev | awk \"{sub(/;/, \\\"\\\", \\$3); print \\$3-8}\""
+        cmd | getline result
+        close(cmd)
+        return result
+    }
+
     /keysyms/ {
         if ($5 == "keysyms") {
-            keysyms = $7
+            keysym = $7
         } else if ($8 == "keysyms") {
-            keysyms = $10
+            keysym = $10
         }
     }
     /MSC_SCAN/ {
@@ -70,7 +80,7 @@ tail -f a.log | awk '
     }
     /EV_KEY/ {
         keycode = $8
-        keycode_name= $9
+        keycode_name = $9
         sub(/,/, "", keycode_name)
         sub(/\(/, "", keycode_name)
         sub(/\)/, "", keycode_name)
@@ -79,15 +89,17 @@ tail -f a.log | awk '
         } else if ($11 == "0") {
             action = "↑"
         }
-
-        printf "scancode: %s, keycode: %s(%s), keysyms: %s, action: %s\n", scancode, keycode, keycode_name, keysyms, action
-        keysyms=""
-        scancode=""
-        keycode=""
-        keycode_name=""
-        action=""
+        keysym_keycode = get_keycode(keysym)
+        printf "scancode: %s, keycode: %s(%s), keysym: %s(%s), action: %s\n", scancode, keycode, keycode_name, keysym, keysym_keycode, action
+        keysym = ""
+        scancode = ""
+        keycode = ""
+        keycode_name = ""
+        action = ""
+        keysym_keycode = ""
     }
 '
 
 # 等待子进程结束
 wait
+
