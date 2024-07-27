@@ -8,7 +8,7 @@ in /usr/share/X11/xkb/symbols/inet), the google idx will re-emit a controlRight 
 
 So I shouldn't use xkb symbols file, and I shouldn't use "sudo setkeycodes e04d 97" ("sudo showkey -s" get "e04d" for right-arrow),
 it will show error for usb keyboard: "setkeycodes: failed to set scancode cd to keycode 97: ioctl KDSETKEYCODE: Invalid argument",
-I can only use /etc/udev/hwdb.d/10-myboard.hwdb:
+I can only use /etc/udev/hwdb.d/10-myboard.hwdb(or /usr/lib/udev/hwdb.d/10-myboard.hwdb):
 
     evdev:input:b0003v046Dp4024*
      KEYBOARD_KEY_7004f=97
