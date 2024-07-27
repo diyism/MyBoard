@@ -25,6 +25,10 @@ finally, test it with "sudo evtest", and the key code has been changed from 106 
 
 scancode(700f4, or e04d) --> keycode(RGHT, Right, KEY_RIGHT, or 106) --> keysyms(RCTL, Control_R, KEY_RIGHTCTRL, or 97)
 
+linux default scancode --> keycode, for example: 70045 --> key_f12
+ref: https://github.com/torvalds/linux/blob/master/drivers/hid/hid-debug.c#L380
+{ 0x07, 0x0045, "KeyboardF12" },
+
 cat ./showkeys.sh:
 #!/bin/bash
 
