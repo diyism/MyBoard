@@ -33,6 +33,7 @@ cleanup() {
     echo "正在停止 xkbcli 和 evtest..."
     sudo pkill -f "xkbcli interactive-evdev"
     sudo pkill -f "evtest /dev/input/event4"
+    rm a.log
     exit 0
 }
 
@@ -40,11 +41,31 @@ cleanup() {
 trap cleanup SIGINT
 
 # 启动 xkbcli 和 evtest
-sudo stdbuf -oL xkbcli interactive-evdev >>a.log 2>&1 &
-sudo evtest /dev/input/event4 >>a.log 2>&1 &
+sudo stdbuf -oL xkbcli interactive-evdev >> a.log 2>&1 &
+sudo evtest /dev/input/event4 >> a.log 2>&1 &
 
-# 开始实时显示日志
-tail -f a.log
+# 实时处理并显示日志
+tail -f a.log | awk '
+    /keysyms/ {
+        if ($5 == "keysyms") {
+            keysyms = $7
+        } else if ($8 == "keysyms") {
+            keysyms = $10
+        }
+    }
+    /MSC_SCAN/ {
+        scancode = $NF
+    }
+    /EV_KEY/ {
+        keycode = $8
+        keycode_name= $9
+        sub(/,/, "", keycode_name)
+        sub(/\(/, "", keycode_name)
+        sub(/\)/, "", keycode_name)
+
+        printf "scancode: %s, keycode: %s(%s), keysyms: %s\n", scancode, keycode, keycode_name, keysyms
+    }
+'
 
 # 等待子进程结束
 wait
