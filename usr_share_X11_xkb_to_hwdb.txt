@@ -33,6 +33,8 @@ scancode名称可以查: https://github.com/torvalds/linux/blob/master/drivers/h
 { 0x07, 0x004f, "KeyboardRightArrow" },
 keycode名称可以查: grep -i 106 /usr/include/linux/input-event-codes.h
 #define KEY_RIGHT		106
+用 keysym名称 查 X keycode(把x keycode减去8就是linux keycode): grep -i rctl /usr/share/X11/xkb/keycodes/evdev
+<RCTL> = 105;
 
 cat ./showkeys.sh:
 #!/bin/bash
