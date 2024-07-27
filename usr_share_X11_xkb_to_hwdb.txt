@@ -14,6 +14,7 @@ I can only use /etc/udev/hwdb.d/10-myboard.hwdb:
      KEYBOARD_KEY_7004f=97
 
 "700f4" is the rightArrow scancode in "sudo evtest".
+"97" or "KEY_RIGHTCTRL" is from the "sudo evtest" or "grep -i right /usr/include/linux/input-event-codes.h"
 
 and then exec:
 
