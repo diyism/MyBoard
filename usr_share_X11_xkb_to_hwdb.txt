@@ -31,7 +31,7 @@ linux内核默认映射代码: https://github.com/torvalds/linux/blob/master/dri
 ref:
 scancode名称可以查: https://github.com/torvalds/linux/blob/master/drivers/hid/hid-debug.c#L380
 { 0x07, 0x004f, "KeyboardRightArrow" },
-keycode名称可以查: grep -i grep -i 106 /usr/include/linux/input-event-codes.h
+keycode名称可以查: grep -i 106 /usr/include/linux/input-event-codes.h
 #define KEY_RIGHT		106
 
 cat ./showkeys.sh:
