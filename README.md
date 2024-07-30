@@ -16,11 +16,15 @@ There are 3 steps to run:
         usr_share_X11_xkb_symbols_inet.k400r      for logitech k400r european keybaord
         usr_share_X11_xkb_symbols_inet.k400r_for_armbian_waydroid     for logitech k400r european keybaord on armbian+waydroid
 
-2. modify xserver and gtk:
+   a better method is to define /etc/udev/hwdb.d/10-myboard.hwdb:
+
+        sudo cp etc_udev_hwdbd_10-myboard.hwdb /etc/udev/hwdb.d/10-myboard.hwdb
+
+3. modify xserver and gtk:
 
         modify_xserver_and_gtk.txt
 
-3. run python script based on python xlib:
+4. run python script based on python xlib:
 
         python3 myboard.py
 
