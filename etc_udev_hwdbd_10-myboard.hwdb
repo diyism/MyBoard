@@ -1,0 +1,77 @@
+evdev:input:b0003v046Dp4024*        #logitech k400r
+ #1st line:
+ #KEYBOARD_KEY_70029=esc             #esc
+
+ #2nd line:
+ #KEYBOARD_KEY_70035=grave           #grave
+ KEYBOARD_KEY_7001e=leftmeta        #1               leftmeta
+ KEYBOARD_KEY_7001f=1               #2               1
+ KEYBOARD_KEY_70020=2               #3               2
+ KEYBOARD_KEY_70021=3               #4               3
+ KEYBOARD_KEY_70022=4               #5               4
+ KEYBOARD_KEY_70023=5               #6               5
+ KEYBOARD_KEY_70024=6               #7               6
+ KEYBOARD_KEY_70025=7               #8               7
+ KEYBOARD_KEY_70026=8               #9               8
+ KEYBOARD_KEY_70027=9               #0               9
+ KEYBOARD_KEY_7002d=0               #minus           0
+ KEYBOARD_KEY_7002e=up              #equal           up
+ #KEYBOARD_KEY_7002a=backspace       #backspace
+
+ #3rd line:
+ #KEYBOARD_KEY_7002b=tab             #tab
+ #KEYBOARD_KEY_70014=q               #q
+ #KEYBOARD_KEY_7001a=w               #w
+ #KEYBOARD_KEY_70008=e               #e
+ #KEYBOARD_KEY_70015=r               #r
+ #KEYBOARD_KEY_70017=t               #t
+ KEYBOARD_KEY_7001c=equal           #y               equal
+ KEYBOARD_KEY_70018=y               #u               y
+ KEYBOARD_KEY_7000c=u               #i               u
+ KEYBOARD_KEY_70012=i               #o               i
+ KEYBOARD_KEY_70013=o               #p               o
+ KEYBOARD_KEY_7002f=p               #leftbrace       p
+ KEYBOARD_KEY_70030=backslash       #rightbrace      backslash
+ #KEYBOARD_KEY_70028=enter           #enter
+
+ #4th line:
+ KEYBOARD_KEY_70039=a               #capslock        a
+ KEYBOARD_KEY_70004=s               #a               s
+ KEYBOARD_KEY_70016=d               #s               d
+ KEYBOARD_KEY_70007=f               #d               f
+ KEYBOARD_KEY_70009=g               #f               g
+ KEYBOARD_KEY_7000a=home            #g               home
+ KEYBOARD_KEY_7000b=end             #h               end
+ KEYBOARD_KEY_7000d=h               #j               h
+ KEYBOARD_KEY_7000e=j               #k               j
+ KEYBOARD_KEY_7000f=k               #l               k
+ KEYBOARD_KEY_70033=l               #semicolon       l
+ KEYBOARD_KEY_70034=semicolon       #apostrophe      semicolon
+ KEYBOARD_KEY_70032=apostrophe      #backslash       apostrophe
+
+ #5th line:
+ KEYBOARD_KEY_700e1=z               #leftshift       z
+ KEYBOARD_KEY_70064=x               #102nd           x
+ KEYBOARD_KEY_7001d=c               #z               c
+ KEYBOARD_KEY_7001b=v               #x               v
+ KEYBOARD_KEY_70006=b               #c               b
+ KEYBOARD_KEY_70019=leftbrace       #v               leftbrace
+ KEYBOARD_KEY_70005=minus           #b               minus
+ KEYBOARD_KEY_70011=rightbrace      #n               rightbrace
+ KEYBOARD_KEY_70010=n               #m               n
+ KEYBOARD_KEY_70036=m               #comma           m
+ KEYBOARD_KEY_70037=comma           #dot             comma
+ KEYBOARD_KEY_70038=dot             #slash           dot
+ KEYBOARD_KEY_70052=slash           #up              slash
+ KEYBOARD_KEY_700e5=right           #rightshift      right
+
+ #6th line:
+ #KEYBOARD_KEY_700e0=leftctrl        #leftctrl
+ KEYBOARD_KEY_700e3=leftalt         #leftmeta        leftalt
+ KEYBOARD_KEY_700e2=leftshift       #leftalt         leftshift
+ #KEYBOARD_KEY_7002c=space           #space
+ KEYBOARD_KEY_700e6=rightshift      #rightalt        rightshift
+ KEYBOARD_KEY_700e4=rightalt        #rightctrl       rightalt
+ #KEYBOARD_KEY_70050=left            #left
+ #KEYBOARD_KEY_70051=down            #down
+ KEYBOARD_KEY_7004f=rightctrl       #right           rightctrl
