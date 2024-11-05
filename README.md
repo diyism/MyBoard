@@ -58,4 +58,4 @@ Hacked logitech k400r european B version:
 
 ![](./logitech_k400r_euro_b.jpg)
 
-I've used myboard.py in ubuntu for daily coding work for more than 10 years since 2013.
+I've used myboard.py in ubuntu/debian(kali) for daily coding work for more than 10 years since 2013.
