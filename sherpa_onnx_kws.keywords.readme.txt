@@ -1,0 +1,185 @@
+23个韵母: a o e i u v ai ei u(e)i ao ou i(o)u ie ve an en in u(e)n vn ang eng ing ong
+特韵1: er
+复韵12: ia、ua、uo、iao、uai、ian、uan、üan、iang、uang、ueng、iong
+
+ēi éi ěi èi 只有ei2 能灵敏触发
+bō bó bǒ bò 只有bo1,bo2 能勉强触发, bā,bá,bǎ,bà中ba3,ba4能灵敏触发,但会与a混淆, bī bí bǐ bì 中bi3,bi4能灵敏触发
+suī suí suǐ suì 只有sui2能灵敏触发
+dē dé dě dè 只有de2可以触发, 但是不灵敏, dāi dái dǎi dài 只有dai4能灵敏触发
+yī yí yǐ yì 中yi1 yi3 yi4都能触发(但不是确定触发到自己), ē é ě è 中e4能灵敏触发
+fū fú fǔ fù 中fu1,fu2,fu4 能灵敏触发
+jī jí jǐ jì 中ji1,ji2,ji4 能灵敏触发
+huī huí huǐ huì 中hui2,hui4 能灵敏触发
+āi ái ǎi ài 中ai1,ai4 能灵敏触发
+jiē jié jiě jiè 都能灵敏触发, 但jie1与G(jī) 容易混淆, 所以去掉jie1, 并相应去掉G(ji2)
+kāi kái kǎi kài 中kai1能灵敏触发, 但是可能与I(ai1)混淆, kāo káo kǎo kào 只有 kao3,kao4 能灵敏触发
+lē lé lě lè 中 le4灵敏触发, lōu lóu lǒu lòu 中lou2灵敏触发
+mō mó mǒ mò 中 mo2, mo4 灵敏触发
+ēn én ěn èn 中只有 en1勉强触发, nǚ 灵敏触发
+ōu óu ǒu òu 触发困难, ō ó ǒ ò 能灵敏触发, 但是用的是dog中的/ɔ/音, o2或wo2或wai1或wai2或wai3触发o3, 所以去除o3
+pī pí pǐ pì 中pi1能灵敏触发, 但是发音是 bee中的/i:/音, 不能发为/i/音, 另为避免与bi3,bi4混淆 而去掉 pi3, pi4
+kū kú kǔ kù 中ku1, ku3, ku4 都能灵敏触发, 用来输出Q
+ā á ǎ à 都无法触发, 只有a能灵敏触发, 用来输出R
+sē sé sě sè 中se4勉强触发, sān sán sǎn sàn 中san1灵敏触发, 用来输出S
+tāng táng tǎng tàng 中tang1,tang2,tang3 都灵敏触发, 用来输出T
+yōu yóu yǒu yòu 中you2,you3,you4 都灵敏触发, 用来输出U
+wēi wéi wěi wèi 中wei1,wei4 灵敏触发, 用来输出V
+wū wú wǔ wù 只有wu4能触发, 但与o4易混淆, wēn wén wěn wèn 中wen1,wen2,wen4 灵敏触发, 用来输出W
+kā ká kǎ kà 只有ka2勉强触发ka3, chā chá chǎ chà 中cha2,cha4灵敏触发, 用来输出X
+wāi wái wǎi wài 中 wai4 灵敏触发
+rē ré rě rè 中re3,re4 灵敏触发, r要发翘舌音, 不能发音为英语中的/z/
+
+========================================================================
+
+keywords.txt 内容:
+ēi @ei1
+éi @A(ei2)
+ěi @ei3
+èi @ei4
+
+b ī @bi1
+b í @bi2
+b ǐ @B(bi3)
+b ì @B(bi4)
+
+s uī @sui1
+s uí @C(sui2)
+s uǐ @sui3
+s uì @sui4
+
+d āi @dai1
+d ái @dai2
+d ǎi @dai3
+d ài @D(dai4)
+
+d ē @de1
+d é @D(de2)
+d ě @de3
+d è @de4
+
+y ī @E(yi1)
+y í @yi2
+y ǐ @E(yi3)
+y ì @E(yi4)
+
+f ū @F(fu1)
+f ú @F(fu2)
+f ǔ @F(fu3)
+f ù @F(fu4)
+
+j ī @G(ji1)
+
+j ǐ @ji3
+j ì @G(ji4)
+
+h uī @hui1
+h uí @H(hui2)
+h uǐ @hui3
+h uì @H(hui4)
+
+āi @I(ai1)
+ái @ai2
+ǎi @ai3
+ài @I(ai4)
+
+
+j ié @J(jie2)
+j iě @J(jie3)
+j iè @jie4
+
+k āo @kao1
+k áo @kao2
+k ǎo @kao3
+k ào @K(kao4)
+
+k āi @K(kai1)
+k ái @kai2
+k ǎi @kai3
+k ài @kai4
+
+l ē @le1
+l é @le2
+l ě @le3
+l è @L(le4)
+
+l ōu @lou1
+l óu @L(lou2)
+l ǒu @lou3
+l òu @lou4
+
+m ō @mo1
+m ó @mo2
+m ǒ @mo3
+m ò @mo4
+
+ēn @en1
+én @en2
+ěn @en3
+èn @en4
+
+n ǚ @N(nv3)
+
+ōu @O(ou1)
+óu @ou2
+ǒu @ou3
+òu @ou4
+
+ō @o1
+ó @O(o2)
+
+ò @o4
+
+p ī @P(pi1)
+p í @P(pi2)
+
+k ū @Q(ku1)
+k ú @ku2
+k ǔ @Q(ku3)
+k ù @Q(ku4)
+
+a @R(a)
+
+s ē @se1
+s é @se2
+s ě @se3
+s è @se4
+
+s ān @S(san1)
+s án @san2
+s ǎn @san3
+s àn @san4
+
+t āng @T(tang1)
+t áng @T(tang2)
+t ǎng @T(tang3)
+t àng @tang4
+
+y ōu @you1
+y óu @U(you2)
+y ǒu @U(you3)
+y òu @U(you4)
+
+w ēi @V(wei1)
+w éi @wei2
+w ěi @wei3
+w èi @V(wei4)
+
+w ēn @W(wen1)
+w én @W(wen2)
+w ěn @wen3
+w èn @W(wen4)
+
+ch ā @cha1
+ch á @X(cha2)
+ch ǎ @cha3
+ch à @X(cha4)
+
+w āi @wai1
+w ái @wai2
+w ǎi @wai3
+w ài @Y(wai4)
+
+r ē @re1
+r é @re2
+r ě @Z(re3)
+r è @Z(re4)
