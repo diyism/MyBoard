@@ -1,7 +1,7 @@
 23个韵母: a    o    e    i     u         v        ai        ei    u(e)i    ao     ou   i(o)u    ie   ve    an    en    in    u(e)n    vn    ang    eng    ing    ong
-         ha    mo   he   bi    fu       jv       hai        ei             kao    dou                      wan   hen          hun          tang    peng          dong
-         cha   o    le   ji    ku                wai       wei             gao    you                      san                             wang    feng
-                    re   qi    lu                bai       suo             mao    tou
+         ha    mo   he   bi    fu       jv       hai        ei             kao    dou                      wan   hen          hun          wang    peng          dong
+         cha   o    le   ji    ku                wai       wei             gao    you                      san                                     feng
+         ta         re   qi    lu                bai       suo             mao    tou
                                                  cai                       bao
 特韵1: er ri
 复韵12: ia、ua、uo、iao、uai、ian、uan、üan、iang、uang、ueng、iong
@@ -9,7 +9,7 @@
 A: ēi éi ěi èi 只有ei2 能灵敏触发, 可发音为hei 方便触发
 B: bō bó bǒ bò 只有bo1,bo2 能勉强触发, bā,bá,bǎ,bà中ba3,ba4能灵敏触发,但会与a混淆, bī bí bǐ bì 中bi3,bi4能灵敏触发
 C: xī xí xǐ xì 无法触发, cī cí cǐ cì 中ci3能灵敏触发, 发音为 chi_ri 能更灵敏触发, cāi cái cǎi cài 中cai2,cai4能灵敏触发
-D: dē dé dě dè 只有de2可以触发, 但是不灵敏, dāi dái dǎi dài 只有dai4能灵敏触发, dān dán dǎn dàn 
+D: dē dé dě dè 只有de2可以触发, 但是不灵敏, dāi dái dǎi dài 只有dai4能灵敏触发, dōu dóu dǒu dòu 中dou1灵敏触发
 E: yī yí yǐ yì 中yi1 yi3 yi4都能触发(但不是确定触发到自己), 且yi是闭口音不易识别, ē é ě è 中e4能灵敏触发, 还可发音为he方便触发, 而e3被jie误触发, 删除
 F: fū fú fǔ fù 中fu1,fu2,fu4 能灵敏触发
 G: jī jí jǐ jì 中ji1,ji2,ji4 能灵敏触发
