@@ -1,15 +1,19 @@
-23个韵母: a o e i u v ai ei u(e)i ao ou i(o)u ie ve an en in u(e)n vn ang eng ing ong
+23个韵母: a    o    e    i     u         v        ai        ei    u(e)i    ao     ou   i(o)u    ie   ve    an    en    in    u(e)n    vn    ang    eng    ing    ong
+         ha    mo   he   bi    fu       jv       hai        ei             kao    dou                      wan   hen          hun          tang    peng          dong
+         cha   o    le   ji    ku                wai       wei             gao    you                      san                             wang    feng
+                    re   qi    lu                bai       suo             mao    tou
+                                                 cai                       bao
 特韵1: er ri
 复韵12: ia、ua、uo、iao、uai、ian、uan、üan、iang、uang、ueng、iong
 
 A: ēi éi ěi èi 只有ei2 能灵敏触发, 可发音为hei 方便触发
 B: bō bó bǒ bò 只有bo1,bo2 能勉强触发, bā,bá,bǎ,bà中ba3,ba4能灵敏触发,但会与a混淆, bī bí bǐ bì 中bi3,bi4能灵敏触发
-C: xī xí xǐ xì 无法触发, cī cí cǐ cì 中ci3能灵敏触发, 发音为 chi_ri 能更灵敏触发
-D: dē dé dě dè 只有de2可以触发, 但是不灵敏, dāi dái dǎi dài 只有dai4能灵敏触发
+C: xī xí xǐ xì 无法触发, cī cí cǐ cì 中ci3能灵敏触发, 发音为 chi_ri 能更灵敏触发, cāi cái cǎi cài 中cai2,cai4能灵敏触发
+D: dē dé dě dè 只有de2可以触发, 但是不灵敏, dāi dái dǎi dài 只有dai4能灵敏触发, dān dán dǎn dàn 
 E: yī yí yǐ yì 中yi1 yi3 yi4都能触发(但不是确定触发到自己), 且yi是闭口音不易识别, ē é ě è 中e4能灵敏触发, 还可发音为he方便触发, 而e3被jie误触发, 删除
 F: fū fú fǔ fù 中fu1,fu2,fu4 能灵敏触发
 G: jī jí jǐ jì 中ji1,ji2,ji4 能灵敏触发
-H: huī huí huǐ huì 中hui2,hui4 能灵敏触发
+H: huī huí huǐ huì 中hui2,hui4 能灵敏触发   hūn hún hǔn hùn 中hun3,hun4能灵敏识别为hun4
 I: āi ái ǎi ài 中ai1,ai4 能灵敏触发
 J: jiē jié jiě jiè 都能灵敏触发, 但jie1与G(jī) 容易混淆, 所以去掉jie1, 并相应去掉G(ji2)
 K: kāi kái kǎi kài 中kai1,kai2,kai3能触发kai1, 但是可能与I(ai1)混淆, kāo káo kǎo kào 只有 kao2,kao3能灵敏触发kao3, kao4能灵敏触发kao4
@@ -37,12 +41,10 @@ Z: rē ré rě rè 中re3,re4 灵敏触发, r要发翘舌音, 不能发音为英
 6: lū lú lǔ lù 中 lu2, lu4 灵敏触发
 7: qī qí qǐ qì 中qi2,qi3,qi4 灵敏触发
 8: bāo báo bǎo bào 中bao1,bao3,bao4灵敏触发
-9: jiū jiú jiǔ jiù 中jiu3,jiu4灵敏触发
+9: jiū jiú jiǔ jiù 中jiu3,jiu4灵敏触发, gāo gáo gǎo gào 中gao1,gao3,gao4灵敏触发
 0: dōng dóng dǒng dòng 中 dong1,dong3,dong4 灵敏触发
 
-========================================================================
-
-keywords.txt 内容:
+=======================keywords.txt 内容:========================
 ēi @A(ei1)
 éi @A(ei2)
 ěi @A(ei3)
@@ -53,15 +55,15 @@ b í @bi2
 b ǐ @B(bi3)
 b ì @B(bi4)
 
-c ī @ci1
-c í @C(ci2)
-c ǐ @C(ci3)
-c ì @C(ci4)
+c āi @cai1
+c ái @C(cai2)
+c ǎi @cai3
+c ài @C(cai4)
 
-d āi @dai1
-d ái @dai2
-d ǎi @dai3
-d ài @D(dai4)
+d ōu @D(dou1)
+d óu @dou2
+d ǒu @dou3
+d òu @dou4
 
 h ē @E(e1)
 h é @E(e2)
@@ -78,29 +80,20 @@ j ī @G(ji1)
 j ǐ @ji3
 j ì @G(ji4)
 
-h ōu @hou1
-h óu @H(hou2)
-h ǒu @hou3
-h òu @H(hou4)
+h ūn @hun1
+h ún @hun2
+h ǔn @hun3
+h ùn @H(hun4)
 
-h uī @hui1
-h uí @H(hui2)
-h uǐ @hui3
-h uì @H(hui4)
-
-āi @I(ai1)
-ái @I(ai2)
-ǎi @I(ai3)
-ài @I(ai4)
+h āi @I(hai1)
+h ái @I(hai2)
+h ǎi @I(hai3)
+h ài @I(hai4)
 
 j ū @J(jv1)
 j ú @J(jv2)
 j ǔ @J(jv3)
 j ù @J(jv4)
-
-j ié @J(jie2)
-j iě @J(jie3)
-j iè @J(jie4)
 
 k āo @kao1
 k áo @kao2
@@ -111,11 +104,6 @@ l ē @le1
 l é @le2
 l ě @le3
 l è @L(le4)
-
-l uō @luo1
-l uó @L(luo2)
-l uǒ @luo3
-l uò @L(luo4)
 
 m ō @mo1
 m ó @M(mo2)
@@ -147,20 +135,15 @@ h á @ha2
 h ǎ @ha3
 h à @ha4
 
-s ē @se1
-s é @se2
-s ě @se3
-s è @se4
-
 s ān @S(san1)
 s án @san2
 s ǎn @san3
 s àn @san4
 
-t āng @T(tang1)
-t áng @T(tang2)
-t ǎng @T(tang3)
-t àng @T(tang4)
+t ā @T(ta1)
+t á @ta2
+t ǎ @ta3
+t à @ta4
 
 y ōu @you1
 y óu @U(you2)
@@ -195,11 +178,6 @@ r è @Z(re4)
 w ān @1(wan1)
 w án @1(wan2)
 w ǎn @1(wan3)
-
-y āo @yao1
-y áo @yao2
-y ǎo @yao3
-y ào @1(yao4)
 
 t ōu @2(tou1)
 t óu @2(tou2)
@@ -236,12 +214,17 @@ b áo @bao2
 b ǎo @8(bao3)
 b ào @8(bao4)
 
-j iū @jiu1
-j iú @jiu2
-j iǔ @9(jiu3)
-j iù @9(jiu4)
+g āo @9(gao1)
+g áo @gao2
+g ǎo @9(gao3)
+g ào @9(gao4)
 
 d ōng @0(dong1)
 d óng @dong2
 d ǒng @0(dong3)
 d òng @0(dong4)
+
+b āi @bai1
+b ái @Back(bai2)
+b ǎi @Back(bai3)
+b ài @Back(bai4)
